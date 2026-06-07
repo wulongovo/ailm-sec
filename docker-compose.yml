@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  api:
+    build: .
+    container_name: ailm-sec-api
+    ports:
+      - "8000:8000"
+    environment:
+      - LLM_PROVIDER=ollama
+      - LLM_BASE_URL=http://ollama:11434/v1
+      - LLM_API_KEY=ollama...n
+    depends_on:
+      - ollama
+    volumes:
+      - ./data:/app/data
+
+  ollama:
+    image: ollama/ollama
+    container_name: ailm-sec-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+
+volumes:
+  ollama_data:
